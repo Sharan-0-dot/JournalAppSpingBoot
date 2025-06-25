@@ -3,6 +3,7 @@ package com.StartFresh.NewApp.Controller;
 
 import com.StartFresh.NewApp.Model.User;
 import com.StartFresh.NewApp.Service.UserService;
+import com.StartFresh.NewApp.Service.WeatherApiService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +21,7 @@ public class UserController {
     @GetMapping("/")
     public ResponseEntity<?> findUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        return new ResponseEntity<>(service.findByUserName(authentication.getName()), HttpStatus.OK);
+        return new ResponseEntity<>("Hi " + service.findByUserName(authentication.getName()).getUsername(), HttpStatus.OK);
     }
 
     @PutMapping("/")
