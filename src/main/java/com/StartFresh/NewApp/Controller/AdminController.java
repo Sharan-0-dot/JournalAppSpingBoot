@@ -1,5 +1,6 @@
 package com.StartFresh.NewApp.Controller;
 
+import com.StartFresh.NewApp.Cache.AppCache;
 import com.StartFresh.NewApp.Model.User;
 import com.StartFresh.NewApp.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,9 @@ public class AdminController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private AppCache appCache;
+
     @GetMapping("/all-users")
     public ResponseEntity<?> getAllUser() {
         List<User> all = userService.findAll();
@@ -28,5 +32,11 @@ public class AdminController {
     @PostMapping("/create-new-admin")
     public ResponseEntity<?> postAdmin(@RequestBody User u) {
         return new ResponseEntity<>(userService.postNewAdmin(u), HttpStatus.OK);
+    }
+
+    @GetMapping("/initApiKey")
+    public ResponseEntity<?> initApiKey() {
+        appCache.init();
+        return new ResponseEntity<>("ReInitialized Successfully", HttpStatus.OK);
     }
 }

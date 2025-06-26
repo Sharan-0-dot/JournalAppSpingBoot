@@ -3,3 +3,7 @@ logging:
     com:
       StartFresh:
         NewApp: TRACE
+
+weather:
+  api:
+    key: kdhKuf2md4ST3WZskumXXw==v0XkedTCRpt7Yk5g

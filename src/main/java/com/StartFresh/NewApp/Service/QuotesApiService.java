@@ -1,7 +1,9 @@
 package com.StartFresh.NewApp.Service;
 
+import com.StartFresh.NewApp.Cache.AppCache;
 import com.StartFresh.NewApp.Model.QuoteResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -12,17 +14,21 @@ import org.springframework.web.client.RestTemplate;
 @Component
 public class QuotesApiService {
 
-    private static final String API = "https://api.api-ninjas.com/v1/quotes";
-    private static final String apiKey = "kdhKuf2md4ST3WZskumXXw==v0XkedTCRpt7Yk5g";
+    @Value("${weather.api.key}")
+    private String apiKey;
 
     @Autowired
     private RestTemplate restTemplate;
+
+    @Autowired
+    private AppCache cache;
+
 
     public QuoteResponse[] getQuote() {
         HttpHeaders headers = new HttpHeaders();
         headers.set("X-Api-Key", apiKey);
         HttpEntity<String> entity = new HttpEntity<>(headers);
-        ResponseEntity<QuoteResponse[]> response =  restTemplate.exchange(API, HttpMethod.GET, entity, QuoteResponse[].class);
+        ResponseEntity<QuoteResponse[]> response =  restTemplate.exchange(cache.appCache.get("quoteAPI"), HttpMethod.GET, entity, QuoteResponse[].class);
         return response.getBody();
     }
 }
