@@ -1,6 +1,7 @@
 package com.StartFresh.NewApp.Controller;
 
 import com.StartFresh.NewApp.Model.User;
+import com.StartFresh.NewApp.Repository.UserRepositoryImpl;
 import com.StartFresh.NewApp.Service.QuotesApiService;
 import com.StartFresh.NewApp.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,9 @@ public class PublicController {
     @Autowired
     private UserService service;
 
+    @Autowired
+    private UserRepositoryImpl userRepository;
+
 
     @Autowired
     private QuotesApiService quotesApiService;
@@ -27,5 +31,10 @@ public class PublicController {
     @GetMapping("/quote")
     public ResponseEntity<?> getQuote() {
         return new ResponseEntity<>(quotesApiService.getQuote(), HttpStatus.OK);
+    }
+
+    @GetMapping("/getUser")
+    public  ResponseEntity<?> getuser() {
+        return new ResponseEntity<>(userRepository.getUserForSA(), HttpStatus.OK);
     }
 }
